@@ -1,12 +1,3 @@
-" -----------------------------------------------------------------------------
-" File: gruvbox.vim
-" Description: Retro groove color scheme for Vim
-" Author: morhetz <morhetz@gmail.com>
-" Source: https://github.com/morhetz/gruvbox
-" Last Modified: 12 Aug 2017
-" -----------------------------------------------------------------------------
-
-" Supporting code -------------------------------------------------------------
 " Initialisation: {{{
 
 if version > 580
@@ -369,55 +360,6 @@ if exists('g:gruvbox_italicize_strings')
 endif
 
 " }}}
-" Highlighting Function: {{{
-
-function! s:HL(group, fg, ...)
-  " Arguments: group, guifg, guibg, gui, guisp
-
-  " foreground
-  let fg = a:fg
-
-  " background
-  if a:0 >= 1
-    let bg = a:1
-  else
-    let bg = s:none
-  endif
-
-  " emphasis
-  if a:0 >= 2 && strlen(a:2)
-    let emstr = a:2
-  else
-    let emstr = 'NONE,'
-  endif
-
-  " special fallback
-  if a:0 >= 3
-    if g:gruvbox_guisp_fallback != 'NONE'
-      let fg = a:3
-    endif
-
-    " bg fallback mode should invert higlighting
-    if g:gruvbox_guisp_fallback == 'bg'
-      let emstr .= 'inverse,'
-    endif
-  endif
-
-  let histring = [ 'hi', a:group,
-        \ 'guifg=' . fg[0], 'ctermfg=' . fg[1],
-        \ 'guibg=' . bg[0], 'ctermbg=' . bg[1],
-        \ 'gui=' . emstr[:-2], 'cterm=' . emstr[:-2]
-        \ ]
-
-  " special
-  if a:0 >= 3
-    call add(histring, 'guisp=' . a:3[0])
-  endif
-
-  execute join(histring, ' ')
-endfunction
-
-" }}}
 " Gruvbox Hi Groups: {{{
 
 " memoize common hi groups
@@ -458,7 +400,6 @@ call s:HL('GruvboxOrangeSign', s:orange, s:sign_column, s:invert_signs)
 
 " }}}
 
-" Vanilla colorscheme ---------------------------------------------------------
 " General UI: {{{
 
 " Normal text
@@ -667,34 +608,6 @@ if has("spell")
 endif
 
 " }}}
-
-" Rainbow Parentheses: {{{
-
-if !exists('g:rbpt_colorpairs')
-  let g:rbpt_colorpairs =
-    \ [
-      \ ['blue', '#458588'], ['magenta', '#b16286'],
-      \ ['red',  '#cc241d'], ['166',     '#d65d0e']
-    \ ]
-endif
-
-let g:rainbow_guifgs = [ '#d65d0e', '#cc241d', '#b16286', '#458588' ]
-let g:rainbow_ctermfgs = [ '166', 'red', 'magenta', 'blue' ]
-
-if !exists('g:rainbow_conf')
-   let g:rainbow_conf = {}
-endif
-if !has_key(g:rainbow_conf, 'guifgs')
-   let g:rainbow_conf['guifgs'] = g:rainbow_guifgs
-endif
-if !has_key(g:rainbow_conf, 'ctermfgs')
-   let g:rainbow_conf['ctermfgs'] = g:rainbow_ctermfgs
-endif
-
-let g:niji_dark_colours = g:rbpt_colorpairs
-let g:niji_light_colours = g:rbpt_colorpairs
-
-"}}}
 
 call s:HL('multiple_cursors_cursor', s:none, s:none, s:inverse)
 call s:HL('multiple_cursors_visual', s:none, s:bg2)
